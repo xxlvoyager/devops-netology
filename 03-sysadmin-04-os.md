@@ -194,3 +194,39 @@ nr_open - максимальное количество файлов, котор
 #Для пользователя
 vagrant           hard    nproc           5000
 ```
+
+---
+
+Дорабатываем /etc/systemd/system/node_exporter.service
+```
+[Unit]
+
+Description=Node_exporter daemon
+After=syslog.target network.target
+
+[Service]
+EnvironmentFile=/etc/systemd/node_exporter.conf
+ExecStart=/usr/local/bin/node_exporter $NODE_EXPORTER
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+создаем файл /etc/systemd/node_exporter.conf
+
+```
+NODE_EXPORTER="
+--collector.disable-defaults
+--collector.filesystem
+--collector.netstat
+--collector.meminfo
+--collector.cpu
+"
+```
+
+далее
+
+`sudo systemctl daemon-reload`
+
+`sudo systemctl restart node_exporter.service`
