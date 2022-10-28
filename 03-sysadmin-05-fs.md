@@ -91,9 +91,10 @@ Device     Boot   Start     End Sectors  Size Id Type
 
 5.
 копируем таблицу разделов на второй диск
+
 `sfdisk -d /dev/sdb | sfdisk /dev/sdc`
-создаем диски согласно задания, проверяем  что получилось
-командой `lsblk`
+
+проверяем,  что получилоськомандой `lsblk`
 ```
 NAME                 MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda                    8:0    0   64G  0 disk 
