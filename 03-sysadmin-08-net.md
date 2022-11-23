@@ -186,32 +186,6 @@ bird      671            bird    8u  IPv4  23105      0t0  UDP *:520
 
 
 
-
-Часть задания 7*  
-
-Проверяем передачу информации по протоколу RIP соседнему серверу
-
-```
-Router#show ip rip database 
-0.0.0.0/0    auto-summary
-0.0.0.0/0    redistributed
-    [1] via 0.0.0.0, 
-10.0.0.0/8    auto-summary
-10.80.0.0/24
-    [1] via 10.100.0.2, 00:00:29, GigabitEthernet0/2
-10.90.0.0/24
-    [1] via 10.100.0.2, 00:00:17, GigabitEthernet0/2
-10.100.0.0/24    directly connected, GigabitEthernet0/2
-10.150.0.0/24
-    [1] via 10.100.0.2, 00:00:29, GigabitEthernet0/2
-10.200.0.0/24
-    [1] via 10.100.0.2, 00:00:29, GigabitEthernet0/2
-192.168.250.0/24    auto-summary
-192.168.250.0/24    directly connected, GigabitEthernet0/1
-192.168.255.0/24    auto-summary
-192.168.255.0/24    directly connected, GigabitEthernet0/0
-```
-
 5. Диаграмма L3 сети собранной в лабораторной работе
 <img src=lab-2.drawio.png alt="Схема сети L3">
 
