@@ -309,7 +309,7 @@ ports=22/tcp
        Firewall is active and enabled on system start
 
 
-Смотрим состяное 
+Смотрим состяние
 
 `sudo ufw status verbose`
 
@@ -361,4 +361,13 @@ Description: OpenSSH protocol.
 
 Port:
   22/tcp
+```
+
+Разрешения так-можно было сделать при помощи комманд
+
+```
+sudo ufw allow in  22/tcp
+sudo ufw allow in  80/tcp
+sudo ufw allow in  443/tcp
+
 ```
