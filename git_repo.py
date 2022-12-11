@@ -54,7 +54,6 @@ command_chunk = ('/usr/bin/gh  api --method POST',
 bash_command = ' '.join(command_chunk)
 
 result_os = os.popen(bash_command).readlines()
-print(result_os)
 result = json.loads(result_os[0])
 
-print('Created pull request', result['uri'] )
+print('Created pull request', result['url'] )
