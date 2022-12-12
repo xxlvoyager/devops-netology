@@ -217,17 +217,19 @@ ERROR  google.com IP mismatch: 64.233.162.113 64.233.162.100.
 ### Ваш скрипт:
 ```python
 #!/usr/bin/env python3
-"""
-this script use GitHub CLI 
-to get help goto https://docs.github.com/en/rest
-"""
+
 import json
 import os
 import re
 import sys
 from  datetime import datetime
-
+from github import Github
+from dotenv import load_dotenv
 from git import Repo
+
+
+load_dotenv() 
+
 
 if len(sys.argv) != 2:
     print('Error: Wrong argumets')
@@ -259,31 +261,20 @@ remote_repo = re.sub('.git','', re.sub('..*/', '', remote_url))
 remote_user = re.sub('..*:','', re.sub('/..*', '', remote_url))
 
 
-command_chunk = ('/usr/bin/gh  api --method POST', 
-                 '-H "Accept: application/vnd.github+json"',
-                 '/repos/{}/{}/pulls'.format(remote_user, remote_repo),
-                 '-f title="{}"'.format(pull_request),
-                 '-f body="Please pull these awesome changes in!"',
-                 '-f head="{}"'.format(branch_name),
-                 '-f base="main"'
-                 )
+g = Github(os.getenv('key'))
 
 
-bash_command = ' '.join(command_chunk)
+repo = g.get_repo("{}/{}".format(remote_user, remote_repo))
+body = '''Please pull these awesome changes in!'''
 
-result_os = os.popen(bash_command).readlines()
-
-result = json.loads(result_os[0])
-
-print('Created pull request', result['uri'] )
+pr = repo.create_pull(title=pull_request, body=body, head=branch_name, base="main")
+pr
 
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
 
-$ ./git_repo.py 'Update git_repo.py'
-Created pull request https://api.github.com/repos/xxlvoyager/devops-netology/pulls/17
 
 ```
 
