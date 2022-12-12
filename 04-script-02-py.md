@@ -218,11 +218,11 @@ ERROR  google.com IP mismatch: 64.233.162.113 64.233.162.100.
 ```python
 #!/usr/bin/env python3
 
-import json
 import os
 import re
 import sys
 from  datetime import datetime
+
 from github import Github
 from dotenv import load_dotenv
 from git import Repo
@@ -255,18 +255,13 @@ repo.index.commit(commit_message)
 repo.git.push('--set-upstream', 'origin', branch)
 original_branch.checkout()
 
-
 remote_url = repo.remote().url
 remote_repo = re.sub('.git','', re.sub('..*/', '', remote_url))
 remote_user = re.sub('..*:','', re.sub('/..*', '', remote_url))
 
-
 g = Github(os.getenv('key'))
-
-
 repo = g.get_repo("{}/{}".format(remote_user, remote_repo))
 body = '''Please pull these awesome changes in!'''
-
 pr = repo.create_pull(title=pull_request, body=body, head=branch_name, base="main")
 pr
 
