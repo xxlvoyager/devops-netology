@@ -227,9 +227,7 @@ from github import Github
 from dotenv import load_dotenv
 from git import Repo
 
-
 load_dotenv() 
-
 
 if len(sys.argv) != 2:
     print('Error: Wrong argumets')
@@ -256,11 +254,10 @@ repo.git.push('--set-upstream', 'origin', branch)
 original_branch.checkout()
 
 remote_url = repo.remote().url
-remote_repo = re.sub('.git','', re.sub('..*/', '', remote_url))
-remote_user = re.sub('..*:','', re.sub('/..*', '', remote_url))
+remote_repo = re.sub('.git','', re.sub('..*:', '', remote_url))
 
 g = Github(os.getenv('key'))
-repo = g.get_repo("{}/{}".format(remote_user, remote_repo))
+repo = g.get_repo(remote_repo)
 body = '''Please pull these awesome changes in!'''
 pr = repo.create_pull(title=pull_request, body=body, head=branch_name, base="main")
 pr
