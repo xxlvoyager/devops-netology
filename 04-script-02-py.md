@@ -257,16 +257,21 @@ remote_url = repo.remote().url
 remote_repo = re.sub('.git','', re.sub('..*:', '', remote_url))
 
 g = Github(os.getenv('key'))
-repo = g.get_repo(remote_repo)
+repo_git = g.get_repo(remote_repo)
 body = '''Please pull these awesome changes in!'''
-pr = repo.create_pull(title=pull_request, body=body, head=branch_name, base="main")
-pr
+pr = repo_git.create_pull(title=pull_request, body=body, head=branch_name, base="main")
+
+try:
+    pr
+    print ('PR created')
+except Exception as e:
+    print ('PR creation have error - {}'.format (e))
 
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-
+PR created
 
 ```
 
