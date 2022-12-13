@@ -265,7 +265,7 @@ try:
     pr
     print ('PR created')
 except Exception as e:
-    print ('PR creation have error - {}'.format (e))
+    print ('PR creation have error - {}'.format(e))
 
 ```
 
