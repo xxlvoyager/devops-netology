@@ -46,9 +46,9 @@ remote_user = re.sub('..*:','', re.sub('/..*', '', remote_url))
 g = Github(os.getenv('key'))
 
 
-repo = g.get_repo("{}/{}".format(remote_user, remote_repo))
+repo_github = g.get_repo("{}/{}".format(remote_user, remote_repo))
 body = '''Please pull these awesome changes in!'''
 
-pr = repo.create_pull(title=pull_request, body=body, head=branch_name, base="main")
+pr = repo_github.create_pull(title=pull_request, body=body, head=branch_name, base="main")
 pr
 
