@@ -223,9 +223,9 @@ import re
 import sys
 from  datetime import datetime
 
-from github import Github
 from dotenv import load_dotenv
 from git import Repo
+from github import Github
 
 load_dotenv() 
 
@@ -265,7 +265,7 @@ try:
     pr
     print ('PR created')
 except Exception as e:
-    print ('PR creation have error - {}'.format(e))
+    print ('PR creation have error - {}'.format (e))
 
 ```
 
