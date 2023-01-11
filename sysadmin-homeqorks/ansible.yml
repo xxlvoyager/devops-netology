@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Telnet
+      ignore_errors: true
+      register: current_exec
+      failed_when: current_exec.rc == 2
+      ansible.builtin.expect:
+        command: telnet 10.0.10.17
+        responses:
+          name: admin
+          word: 88776655
+          TECH:
+              - enable
+              - show sntp client
+              - show ip
+              - quit 
+    - debug: var=current_exec.stdout_lines
