@@ -54,7 +54,9 @@ docker push  xxlvoyager/devops:0.0.1
 
 Страница образа доступна по адресу
 
-https://hub.docker.com/repository/docker/xxlvoyager/devops/general
+https://hub.docker.com/r/xxlvoyager/devops/tags
+
+Tag 0.0.1
 
 ## Задача 2
 
@@ -128,12 +130,14 @@ ansible-playbook [core 2.14.1]
 
 $docker login
 
-docker push  xxlvoyager/devops:0.0.2
+$docker push  xxlvoyager/devops:0.0.2
 
 ```
 Ссылка на репозиторий
 
-https://hub.docker.com/repository/docker/xxlvoyager/devops/general
+https://hub.docker.com/r/xxlvoyager/devops/tags
+
+Tag 0.0.2
 
 ---
 
