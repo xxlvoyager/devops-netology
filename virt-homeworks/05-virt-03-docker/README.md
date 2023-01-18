@@ -98,24 +98,62 @@ https://hub.docker.com/repository/docker/xxlvoyager/devops/general
 
 
 ## Задача 3
+```
+docker run  -d -t -v `pwd`:/data centos
+docker run  -d -t -v `pwd`:/data debian
 
-- Запустите первый контейнер из образа ***centos*** c любым тэгом в фоновом режиме, подключив папку ```/data``` из текущей рабочей директории на хостовой машине в ```/data``` контейнера;
-- Запустите второй контейнер из образа ***debian*** в фоновом режиме, подключив папку ```/data``` из текущей рабочей директории на хостовой машине в ```/data``` контейнера;
-- Подключитесь к первому контейнеру с помощью ```docker exec``` и создайте текстовый файл любого содержания в ```/data```;
-- Добавьте еще один файл в папку ```/data``` на хостовой машине;
-- Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
+docker ps
+CONTAINER ID   IMAGE                          COMMAND       CREATED              STATUS              PORTS     NAMES
+b60c3abe9793   debian                         "bash"        24 seconds ago       Up 24 seconds                 wonderful_golick
+d37971d02caa   centos                         "/bin/bash"   About a minute ago   Up About a minute             trusting_gates
+
+
+$ docker exec -it trusting_gates bash
+[root@d37971d02caa /]# echo netology devops > /data/filename.txt
+[root@d37971d02caa /]# exit
+exit
+
+$ echo Test host > secondfile.txt
+
+$ docker exec -it wonderful_golick bash
+root@b60c3abe9793:/# cat /data/filename.txt 
+netology devops
+root@b60c3abe9793:/# cat /data/secondfile.txt 
+Test host
+root@b60c3abe9793:/# exit
+exit
+
+```
+
 
 ## Задача 4 (*)
 
-Воспроизвести практическую часть лекции самостоятельно.
+```
+$curl https://raw.githubusercontent.com/netology-code/virt-video-code/main/docker/Dockerfile > Dockerfile
 
-Соберите Docker образ с Ansible, загрузите на Docker Hub и пришлите ссылку вместе с остальными ответами к задачам.
+$touch ansible.cfg
 
+$docker build -t xxlvoyager/devops:0.0.2 .
+
+$ docker run xxlvoyager/devops:0.0.2
+ansible-playbook [core 2.14.1]
+  config file = None
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3.9/site-packages/ansible
+  ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/bin/ansible-playbook
+  python version = 3.9.16 (main, Dec 10 2022, 13:47:19) [GCC 10.3.1 20210424] (/usr/bin/python3)
+  jinja version = 3.1.2
+  libyaml = False
+
+$docker login
+
+docker push  xxlvoyager/devops:0.0.2
+
+```
+Ссылка на репозиторий
+
+https://hub.docker.com/repository/docker/xxlvoyager/devops/general
 
 ---
 
-### Как cдавать задание
-
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
