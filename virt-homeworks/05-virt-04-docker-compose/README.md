@@ -1,22 +1,21 @@
 # Домашнее задание к занятию "4. Оркестрация группой Docker контейнеров на примере Docker Compose"
 
-Для выполнения работы используем шаблоны из приложения к домашнему заданию в папке src
+Для выполнения работы используем шаблоны из приложения к домашнему заданию в папке `src`.
+
 Предварительно инициализируем yandex cloud
 
 ## Задача 1
 
-получаем недостающие занчения:
+Получаем недостающие занчения:
 
-```
-- folder_id 
+- folder_id
 - subnet_id
 - token
 - zone
-```
 
-реурсивно получая инфромацию командами
+Используем команды
 
-```
+```bash
 
 yc config list
 yc vpc network list-subnets --name default
@@ -24,14 +23,14 @@ yc vpc network list-subnets --name default
 
 Проверяем и создаем образ
 
-```
+```bash
 packer validate centos-7-base.json
 packer build centos-7-base.json
 ```
 
-проверяем наличие созданного образа
+Проверяем наличие созданного образа
 
-```
+```console
 $ yc compute image list
 +----------------------+---------------+--------+----------------------+--------+
 |          ID          |     NAME      | FAMILY |     PRODUCT IDS      | STATUS |
@@ -46,7 +45,7 @@ $ yc compute image list
 
  Заменяем  на свои переменные
 
- ```
+ ```console
  # https://console.cloud.yandex.ru/cloud?section=overview
  variable "yandex_cloud_id" {
 -  default = "b1gu1gt5nqi6lqgu3t7s"
@@ -74,7 +73,7 @@ $ yc compute image list
 
 Просматирваем и применям Terraform план
 
-```bash
+```console
 terraform plan
 terraform apply
 
@@ -87,9 +86,10 @@ external_ip_address_node01_yandex_cloud = "51.250.68.116"
 internal_ip_address_node01_yandex_cloud = "192.168.101.32"
 
 ```
+
 Проверяем доступность машины, оновременно добавляя в `known hosts`
 
-```
+```console
 ssh centos@51.250.68.116
 
 [centos@node01 ~]$ uname -a
@@ -99,24 +99,22 @@ Linux node01.netology.cloud 3.10.0-1160.81.1.el7.x86_64 #1 SMP Fri Dec 16 17:29:
 
 ![Скриншот машины](SHMachine.png)
 
-
 ## Задача 3
 
 В папке ansible в файле inventory прописываем IP адрес созданной машины
 
-```
+```console
 node01.netology.cloud ansible_host=51.250.68.116
 ```
 
 Запускаем исполнение сценария командой 
 
-```
+```bash
 ansible-playbook provision.yml
 
 ```
 
 Подключаемся к серверу по адресу 51.250.68.116:3000 с учетными данными admin / admin
-
 
 ![Скриншот сервиса](SHService.png)
 
@@ -125,9 +123,9 @@ ansible-playbook provision.yml
 ## Задача 4 (*)
 
 Дополнительно создаем в папке terraform еще одну ноду
-в файле node02.tf 
+в файле node02.tf
 
-```
+```console
 resource "yandex_compute_instance" "node02" {
   name                      = "node02"
   zone                      = "ru-central1-a"
@@ -162,7 +160,7 @@ resource "yandex_compute_instance" "node02" {
 
 Добавляем в файл output.tf
 
-```
+```console
 8,14d7
 < output "internal_ip_address_node02_yandex_cloud" {
 <   value = "${yandex_compute_instance.node02.network_interface.0.ip_address}"
@@ -175,7 +173,7 @@ resource "yandex_compute_instance" "node02" {
 
 Запускаем
 
-```
+```console
 terraform apply
 
 ...
@@ -190,7 +188,7 @@ internal_ip_address_node02_yandex_cloud = "192.168.101.7"
 
 Переходим в папуку ansible и вносим машины в iventory
 
-```
+```console
 [nodes:children]
 manager
 
@@ -201,18 +199,15 @@ node02.netology.cloud ansible_host=130.193.50.170
 
 Запускаем установку ПО `ansible-playbook provision.yml`
 
-
-Подключаемся к первой машине по адресу 84.201.174.100:3000 
+Подключаемся к первой машине по адресу 84.201.174.100:3000
 
 Добавляем источник данных Prometheus2  от prometheus  второй машины по внутреннему адресу http://192.168.101.7:9090 с базовой аутенификацией admin/admin
 
-Делаем копию dashboard `Monitor services 2`, меняем в JSON источник данных на Prometeus2
-
-
 ![Скриншот машины](SHDatasource.png)
 
-Вид мониторинга представлен на скриншоте
+Делаем копию dashboard `Monitor services 2`, меняем в JSON источник данных на Prometheus2
 
+Вид мониторинга представлен на скриншоте
 
 ![Скриншот машины](SHConsole.png)
 
