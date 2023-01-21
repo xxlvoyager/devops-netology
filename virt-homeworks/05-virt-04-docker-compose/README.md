@@ -216,3 +216,4 @@ node02.netology.cloud ansible_host=130.193.50.170
 
 ![Скриншот машины](SHConsole.png)
 
+Удаляем созданные машины `terraform destroy`
